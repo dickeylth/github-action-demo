@@ -14,11 +14,12 @@ jobs:
           node-version: '14'
       - run: npm install
       - run: npm run build
-      - run: git status
+      - run: git diff
       - name: Commit report
         run: |
           git config --global user.name 'dickeylth'
           git config --global user.email 'dickeylth@users.noreply.github.com'
+          git checkout ./package.json
           git add ./prebuilds
           git pull
           git diff-index --quiet HEAD ./prebuilds || (git commit -am "chore:bot-build for ${{ matrix.os}}" && git push)
